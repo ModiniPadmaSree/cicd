@@ -90,6 +90,49 @@ deploy_job:
     - ssh $AZURE_VM_USER@$AZURE_VM_IP "python3 /home/$AZURE_VM_USER/app/app.py"  
   only:  
     - main  
+.gitlab-ci.yml  
+stages:
+  - build
+  - test
+  - deploy
+
+build_job:
+  stage: build
+  image: python:3.10
+  script:
+    - echo "Build stage started"
+    - python --version
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+
+test_job:
+  stage: test
+  image: python:3.10
+  script:
+    - echo "Test stage started"
+    - pip install pytest
+    - pytest test_app.py
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
+
+deploy_job:
+  stage: deploy
+  image: python:3.10
+  before_script:
+    - apt-get update -y
+    - apt-get install -y openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$AZURE_SSH_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H $AZURE_VM_IP >> ~/.ssh/known_hosts
+  script:
+    - echo "Deploying application to Azure VM"
+    - scp -r . $AZURE_VM_USER@$AZURE_VM_IP:/home/$AZURE_VM_USER/app
+    - ssh $AZURE_VM_USER@$AZURE_VM_IP "python3 /home/$AZURE_VM_USER/app/app.py"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
 
 Configuring build triggers  
 Build triggers define when the CI pipeline starts automatically.  
