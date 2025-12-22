@@ -1,3 +1,3 @@
-1. All the three branches reviewed and merged to main branch
-2. The repo has 4 branches apart from this which are reviewed
-3. The 3 branches aws, azure, gcp has implementation of CI/CD steps, pipelinr stages, triggers concepts.
+1. All four branches - feature-aws-ci,  feature-azure-ci,  feature-gcp-ci, main are reviewed.
+2. Three branches  feature-aws-ci,  feature-azure-ci,  feature-gcp-ci has the implementation of CI/CD pipeline, pipeline stages, triggers concepts clearly
+3. Reviewed three branches are merged to main branch.
