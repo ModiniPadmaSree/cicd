@@ -1,3 +1,3 @@
-1. All four branches - feature-aws-ci,  feature-azure-ci,  feature-gcp-ci, main are reviewed.
-2. Three branches  feature-aws-ci,  feature-azure-ci,  feature-gcp-ci has the implementation of CI/CD pipeline, pipeline stages, triggers concepts clearly
-3. Reviewed three branches are merged to main branch.
+1. All the branches verified
+2. Three branches holds CI/CD pipeline setup in AWS, Azure, GCP
+3. Main branch contains the reviewed branches that are finally merged into it.
